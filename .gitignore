@@ -1,0 +1,6 @@
+#Private vars
+.env.private
+.env
+
+#venv
+.venv

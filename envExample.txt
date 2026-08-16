@@ -1,0 +1,21 @@
+# Use if running Option A - cron(if you leave a machine running)
+# Copy this file to .env or .env.private and fill in your real values. Never commit a .env.
+
+# Your school's Canvas URL, no trailing slash
+CANVAS_BASE_URL=
+
+# Canvas -> Account -> Settings -> New Access Token
+CANVAS_TOKEN=
+
+# Notion -> https://www.notion.so/my-integrations -> New integration -> Internal Integration Secret
+NOTION_TOKEN=
+
+# The database ID from your Notion database's URL (see README.md)
+NOTION_DATABASE_ID=
+
+
+#Hidden courses - List unwanted course names (sepperated by comma)
+IGNORED_COURSE=
+
+#Optional for automatic Course relation
+NOTION_COURSES_DATABASE_ID =
