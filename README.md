@@ -185,3 +185,6 @@ splits a "database" (the container) from its "data source" (the actual
 table of rows) — the script automatically looks up each database's data
 source ID on first run and caches it, so you don't need to do anything extra
 beyond providing the database IDs as usual.
+
+## Notion sample
+[Samples (with images)](images.md)
