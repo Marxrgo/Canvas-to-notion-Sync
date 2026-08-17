@@ -187,4 +187,4 @@ source ID on first run and caches it, so you don't need to do anything extra
 beyond providing the database IDs as usual.
 
 ## Notion sample
-[Samples (with images)](images.md)
+[Samples (with images)](Images.md)
