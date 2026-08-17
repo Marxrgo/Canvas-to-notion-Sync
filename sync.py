@@ -2,6 +2,7 @@ import os
 import sys
 import requests
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 try:
     from dotenv import load_dotenv
@@ -16,6 +17,7 @@ except ImportError:
 CANVAS_BASE_URL = os.environ.get("CANVAS_BASE_URL", "").rstrip("/")  # e.g. https://yourschool.instructure.com
 CANVAS_TOKEN = os.environ.get("CANVAS_TOKEN", "")
 SCHOOL_YEAR_START = datetime(2025,8,1,tzinfo = timezone.utc) # Edit this for your school year Start date yyyy,mm,dd in utc
+LOCAL_TZ = ZoneInfo("America/New_York")  # change if your school's timezone is different
 
 NOTION_TOKEN = os.environ.get("NOTION_TOKEN", "")
 NOTION_DATABASE_ID = os.environ.get("NOTION_DATABASE_ID", "")
@@ -199,7 +201,7 @@ def build_properties(assignment):
     properties = {
         "Name": {"title": [{"text": {"content": assignment["title"]}}]},
         "Course": {"select": {"name": assignment["course"][:100]}},
-        "Due": {"date": {"start": assignment["due_at"]}},
+        "Due": {"date": {"start": datetime.fromisoformat(assignment["due_at"]).astimezone(LOCAL_TZ).isoformat()}},
         "CanvasID": {"rich_text": [{"text": {"content": assignment["canvas_id"]}}]},
         "Link": {"url": assignment["html_url"] or None},
     }
