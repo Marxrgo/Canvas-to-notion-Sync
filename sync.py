@@ -213,7 +213,6 @@ def build_properties(assignment):
         properties["Done"] = {"checkbox": True}
         properties["Submission"] = {"status": {"name": "Submitted"}}
     elif not assignment["on_paper"]:
-        properties["Done"] = {"checkbox": False}
         properties["Submission"] = {"status": {"name": "Unsubmitted"}}
     # else: on_paper and unsubmitted per Canvas -- leave alone, mark by hand
 
