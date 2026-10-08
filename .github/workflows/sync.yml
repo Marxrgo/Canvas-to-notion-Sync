@@ -1,7 +1,7 @@
 name: Canvas Notion Sync
 on:
   schedule:
-    - cron: "0 * * * *"   # every hour, UTC
+    - cron: "16 * * * *"   # every hour 16 mins, UTC
   workflow_dispatch: {}
 jobs:
   sync:
