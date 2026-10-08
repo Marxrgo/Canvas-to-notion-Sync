@@ -271,7 +271,7 @@ def main():
             else:
                 updated += 1
         except requests.HTTPError as e:
-            #print(f"  Failed to sync '{a['title']}': {e}")
+            #prinmt(f"  Failed to sync '{a['title']}': {e}")
             fail_count += 1
 
     if fail_count > 1:
