@@ -1,7 +1,7 @@
 import os
 import sys
 import requests
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from zoneinfo import ZoneInfo
 
 try:
@@ -17,7 +17,7 @@ except ImportError:
 CANVAS_BASE_URL = os.environ.get("CANVAS_BASE_URL", "").rstrip("/")  # e.g. https://yourschool.instructure.com
 CANVAS_TOKEN = os.environ.get("CANVAS_TOKEN", "")
 SCHOOL_YEAR_START = datetime(2025,8,1,tzinfo = timezone.utc) # Edit this for your school year Start date yyyy,mm,dd in utc
-LOCAL_TZ = ZoneInfo("America/New_York")  # change if your school's timezone is different
+LOCAL_TZ = ZoneInfo("America/New_York")  # change if your timezone is different
 
 NOTION_TOKEN = os.environ.get("NOTION_TOKEN", "")
 NOTION_DATABASE_ID = os.environ.get("NOTION_DATABASE_ID", "")
@@ -33,6 +33,8 @@ REQUIRED_VARS = {
 }
 
 HIDDEN_COURSES = [course.strip() for course in os.environ.get("IGNORED_COURSE","").split(",") if course.strip()]
+
+SYNC_PAST_DAYS = 21
 
 
 def check_config():
@@ -261,6 +263,9 @@ def main():
     print(f"[{datetime.now(timezone.utc).isoformat()}] Fetching Canvas assignments...")
     assignments = fetch_all_assignments()
     print(f"Found {len(assignments)} assignments.")
+    cutoff = datetime.now(timezone.utc) - timedelta(days = SYNC_PAST_DAYS)
+    assignments = [a for a in assignments if datetime.fromisoformat(a["due_at"]) >= cutoff]
+    print(f"Syncing {len(assignments)} assignments")
 
     created, updated, fail_count = 0, 0, 0
     for a in assignments:
@@ -271,7 +276,7 @@ def main():
             else:
                 updated += 1
         except requests.HTTPError as e:
-            print(f"  Failed to sync '{a['title']}': {e}")
+            #print(f"  Failed to sync '{a['title']}': {e}")
             fail_count += 1
 
     if fail_count > 1:
